@@ -1,0 +1,8 @@
+FOLDER_PATH: '../data/raw_pdf'
+# FILE_PATH: os.path.join(FOLDER_PATH, 'DGI_2024.pdf')
+
+# RAG Pipeline Config
+CHUNK_SIZE: 1000
+CHUNK_OVERLAP: 200
+THRESHOLD: 0.75 # Similarity threshold for filtering chunks before insertion
+EMBEDDING_MODEL: 'nomic-embed-text:v1.5'

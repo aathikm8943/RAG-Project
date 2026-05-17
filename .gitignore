@@ -8,3 +8,8 @@ wheels/
 
 # Virtual environments
 .venv
+
+## folders and their contents
+volumes/
+src/__pycache__/
+*.db
