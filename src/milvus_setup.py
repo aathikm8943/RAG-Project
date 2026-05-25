@@ -1,61 +1,45 @@
-from pymilvus import connections
-from pymilvus import (
-    FieldSchema,
-    CollectionSchema,
-    DataType,
-    Collection
-)
+import warnings
+from pymilvus import MilvusClient
+from pymilvus.orm import utility
+
+# Suppress PyMilvus deprecation warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="pymilvus")
 
 class MilvusSetup:
     def __init__(self, host="localhost", port="19530"):
         self.host = host
         self.port = port
+        self.client = MilvusClient(uri=f"http://{host}:{port}", token="")
 
-    def connect(self):
-        connections.connect(
-            alias="default",
-            host=self.host,
-            port=self.port
-        )
-
-    def disconnect(self):
-        connections.disconnect(alias="default")
-        
-    def collection_creation(self):
-
-        fields = [
-
-            FieldSchema(
-                name="id",
-                dtype=DataType.INT64,
-                is_primary=True,
-                auto_id=True
-            ),
-
-            FieldSchema(
-                name="text",
-                dtype=DataType.VARCHAR,
-                max_length=5000
-            ),
-
-            FieldSchema(
-                name="chunk_type",
-                dtype=DataType.VARCHAR,
-                max_length=100
-            ),
-
-            FieldSchema(
-                name="embedding",
-                dtype=DataType.FLOAT_VECTOR,
-                dim=768
+    def create_collection(self, collection_name: str, index_params: dict):
+        """Create collection with specified index parameters."""
+        try:
+            # Check if collection exists
+            if self.client.has_collection(collection_name):
+                print(f"Collection '{collection_name}' already exists, dropping...")
+                self.client.drop_collection(collection_name)
+            
+            # Create collection with schema
+            self.client.create_collection(
+                collection_name=collection_name,
+                dimension=768,
+                metric_type="COSINE",
+                auto_id=True,
+                vector_field_name="embedding",
+                primary_field_name="id",
+                id_type="int64"
             )
-        ]
-
-        schema = CollectionSchema(fields)
-
-        collection = Collection(
-            name="nutrition_rag",
-            schema=schema
-        )
-        
-        return collection
+            
+            # Create index
+            self.client.create_index(
+                collection_name=collection_name,
+                field_name="embedding",
+                index_params=index_params
+            )
+            
+            print(f"Collection '{collection_name}' created successfully")
+            return True
+            
+        except Exception as e:
+            print(f"Error creating collection: {e}")
+            raise
