@@ -4,17 +4,16 @@ A production-grade Retrieval-Augmented Generation (RAG) pipeline for nutrition d
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Architecture](#architecture)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Project Structure](#project-structure)
-- [Configuration](#configuration)
-- [Usage Guide](#usage-guide)
-- [API Reference](#api-reference)
-- [Examples](#examples)
-- [Troubleshooting](#troubleshooting)
+- [Overview](#-overview)
+- [Features](#-features)
+- [Architecture](#-architecture)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Project Structure](#-project-structure)
+- [Configuration](#-configuration)
+- [Usage Guide](#-usage-guide)
+- [Examples](#-examples)
+- [Troubleshooting](#-troubleshooting)
 
 ## 🎯 Overview
 
@@ -403,9 +402,4 @@ MIT License - See LICENSE file for details
 - [LangChain](https://python.langchain.com/) - Document processing
 - [BGE Re-ranker](https://huggingface.co/BAAI/bge-reranker-base) - Re-ranking model
 
-## 📞 Support
 
-For issues and questions:
-1. Check the troubleshooting section
-2. Review experiment notebooks
-3. Open an issue on GitHub
